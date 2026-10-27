@@ -46,7 +46,7 @@ public class App {
                     break;
 
                 case 3:
-                    
+                    // settingsProgram(); // Puedes descomentar si tienes el menú de config activo
                     break;
 
                 case 4:
@@ -78,7 +78,7 @@ public class App {
                 jugarCifraExacta();
                 break;
             case 2:
-                //jugarPalabraMasLarga();
+                jugarPalabraMasLarga();
                 break;
             case 3:
                 calculadoraHumana();
@@ -97,11 +97,9 @@ public class App {
     public static void jugarCifraExacta() {
         System.out.println("\n=== PRUEBA: LA CIFRA EXACTA ===");
         
-        // Generar un número objetivo aleatorio de tres cifras (entre 100 y 999)
         int objetivo = r.nextInt(900) + 100;
         System.out.println("Número objetivo a alcanzar: >>> " + objetivo + " <<<");
 
-        // Generar 6 números auxiliares entre 1 y 10
         int a1 = r.nextInt(10) + 1;
         int a2 = r.nextInt(10) + 1;
         int a3 = r.nextInt(10) + 1;
@@ -109,13 +107,9 @@ public class App {
         int a5 = r.nextInt(10) + 1;
         int a6 = r.nextInt(10) + 1;
 
-        // Turno del Jugador 1 (usando la variable global jugador1)
         int diferenciaJ1 = turnoJugadorCifra(jugador1, objetivo, a1, a2, a3, a4, a5, a6);
-
-        // Turno del Jugador 2 (usando la variable global jugador2)
         int diferenciaJ2 = turnoJugadorCifra(jugador2, objetivo, a1, a2, a3, a4, a5, a6);
 
-        // Mostrar resultados y decidir el ganador (gana quien tenga menor diferencia)
         System.out.println("\n--- RESULTADOS CIFRA EXACTA ---");
         System.out.println("Diferencia de " + jugador1 + ": " + diferenciaJ1);
         System.out.println("Diferencia de " + jugador2 + ": " + diferenciaJ2);
@@ -132,13 +126,12 @@ public class App {
     }
 
     /**
-     * TURNO JUGADOR CIFRA EXACTA (Renombrado para evitar conflictos de nombres)
+     * TURNO JUGADOR CIFRA EXACTA
      */
     public static int turnoJugadorCifra(String nombre, int objetivo, int a1, int a2, int a3, int a4, int a5, int a6) {
         System.out.println("\n--- Turno de " + nombre + " ---");
         int acumulado = 0;
 
-        // Cada jugador realiza 5 operaciones
         for (int i = 1; i <= 5; i++) {
             System.out.println("\nOperación " + i + " de 5");
             System.out.println("Números disponibles: [ " + a1 + "  " + a2 + "  " + a3 + "  " + a4 + "  " + a5 + "  " + a6 + " ]");
@@ -161,7 +154,6 @@ public class App {
             char opcion = sc.next().charAt(0);
             sc.nextLine();
 
-            // Realizar el cálculo de la operación permitida
             if (opcion == '+') {
                 acumulado = n1 + n2;
             } else if (opcion == '-') {
@@ -183,7 +175,6 @@ public class App {
             System.out.println("Resultado de esta operación: " + acumulado);
         }
 
-        // Calcular la diferencia absoluta respecto al objetivo
         int diferencia = acumulado - objetivo;
         if (diferencia < 0) {
             diferencia = diferencia * -1;
@@ -191,6 +182,88 @@ public class App {
 
         System.out.println(">>> Resultado final de " + nombre + ": " + acumulado + " (Diferencia: " + diferencia + ")");
         return diferencia;
+    }
+
+    /**
+     * FUNCIÓN LA PALABRA MÁS LARGA (Integrada)
+     */
+    public static void jugarPalabraMasLarga() {
+        System.out.println("\n=== PRUEBA: LA PALABRA MÁS LARGA ===");
+        
+        String letras = generarLetrasDisponibles();
+        System.out.println("Letras disponibles: " + letras);
+
+        System.out.print(jugador1 + ", escribe tu palabra: ");
+        String palabraJ1 = sc.nextLine().toUpperCase();
+
+        System.out.print("¿" + jugador2 + ", la palabra de " + jugador1 + " es válida en el diccionario? (1 = Sí, 0 = No) ");
+        int diccJ1 = sc.nextInt();
+        sc.nextLine(); 
+
+        System.out.print(jugador2 + ", escribe tu palabra: ");
+        String palabraJ2 = sc.nextLine().toUpperCase();
+
+        System.out.print("¿" + jugador1 + ", la palabra de " + jugador2 + " es válida en el diccionario? (1 = Sí, 0 = No) ");
+        int diccJ2 = sc.nextInt();
+        sc.nextLine();
+
+        int puntosJ1 = 0;
+        if (diccJ1 == 1) {
+            puntosJ1 = palabraJ1.length();
+        }
+
+        int puntosJ2 = 0;
+        if (diccJ2 == 1) {
+            puntosJ2 = palabraJ2.length();
+        }
+
+        System.out.println("\n--- RESULTADOS PALABRA MÁS LARGA ---");
+        System.out.println(jugador1 + " (" + palabraJ1 + "): " + puntosJ1 + " puntos");
+        System.out.println(jugador2 + " (" + palabraJ2 + "): " + puntosJ2 + " puntos");
+
+        if (puntosJ1 > puntosJ2) {
+            gameJugador1++;
+            System.out.println("¡Gana la prueba " + jugador1 + "!");
+        } else if (puntosJ2 > puntosJ1) {
+            gameJugador2++;
+            System.out.println("¡Gana la prueba " + jugador2 + "!");
+        } else {
+            System.out.println("¡La prueba ha finalizado en empate!");
+        }
+    }
+
+    /**
+     * GENERADOR DE LETRAS DISPONIBLES (Adaptado a cantidadLetras)
+     */
+    public static String generarLetrasDisponibles() {
+        String vocales = "AEIOU";
+        String consonantes = "BCDFGHJLMNÑPRSTV";
+        String resultado = "";
+
+        // Generar 4 vocales obligatorias
+        for (int i = 0; i < 4; i++) {
+            int indice = r.nextInt(vocales.length());
+            resultado = resultado + vocales.charAt(indice);
+        }
+
+        // Generar 4 consonantes obligatorias
+        for (int i = 0; i < 4; i++) {
+            int indice = r.nextInt(consonantes.length());
+            resultado = resultado + consonantes.charAt(indice);
+        }
+
+        // Generar las letras restantes hasta completar la cantidad configurada (cantidadLetras)
+        for (int i = 0; i < (cantidadLetras - 8); i++) {
+            if (r.nextBoolean()) {
+                int indice = r.nextInt(vocales.length());
+                resultado = resultado + vocales.charAt(indice);
+            } else {
+                int indice = r.nextInt(consonantes.length());
+                resultado = resultado + consonantes.charAt(indice);
+            }
+        }
+
+        return resultado;
     }
 
     /**
@@ -286,13 +359,11 @@ public class App {
 
         long tiempoFin = System.currentTimeMillis();
         
-        // Cálculo del tiempo total en segundos (incluyendo 20s de penalización por cada error)
         double tiempoTotalSegundos = (tiempoFin - tiempoInicio) / 1000.0 + (errores * 20);
         
         System.out.println("\nTiempo base: " + ((tiempoFin - tiempoInicio) / 1000.0) + " segundos.");
         System.out.println("Errores cometidos: " + errores + " (Penalización: " + (errores * 20) + " segundos).");
         
-        // ¡Este es el return que faltaba y que devuelve el double!
         return tiempoTotalSegundos;
     }
 }
