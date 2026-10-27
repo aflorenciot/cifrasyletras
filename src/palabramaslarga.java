@@ -1,7 +1,7 @@
 import java.util.Random;
 import java.util.Scanner;
 
-public class Palabra {
+public class palabramaslarga {
 
     // Herramientas básicas globales
     static Scanner sc = new Scanner(System.in);
@@ -56,16 +56,16 @@ public class Palabra {
     // FUNCIÓN 2: Gestiona los turnos, el diccionario y los puntos
     
     public static void ejecutarPrueba(String letras) {
-        // Turno del Jugador 1[cite: 2]
-        System.out.print("\nJugador 1, escribe tu palabra: ");
+        // Turno del Jugador 1
+        System.out.print("Jugador 1, escribe tu palabra: ");
         String palabraJ1 = sc.nextLine().toUpperCase();
 
-        System.out.print("¿Jugador 2, la palabra del Jugador 1 es válida en el diccionario? (1 = Sí, 0 = No)");
+        System.out.print("¿Jugador 2, la palabra del Jugador 1 es válida en el diccionario? (1 = Sí, 0 = No) ");
         int diccJ1 = sc.nextInt();
-        sc.nextLine(); // Limpiar el intro del teclado
+        sc.nextLine(); 
 
         // Turno del Jugador 2
-        System.out.print("\nJugador 2, escribe tu palabra: ");
+        System.out.print("Jugador 2, escribe tu palabra: ");
         String palabraJ2 = sc.nextLine().toUpperCase();
 
         System.out.print("¿Jugador 1, la palabra del Jugador 2 es válida en el diccionario? (1 = Sí, 0 = No) ");
@@ -83,7 +83,7 @@ public class Palabra {
         }
 
         // Mostrar resultados y decidir el ganador
-        System.out.println("\n--- RESULTADOS ---");
+        System.out.println("--- RESULTADOS ---");
         System.out.println("Jugador 1 (" + palabraJ1 + "): " + puntosJ1 + " puntos");
         System.out.println("Jugador 2 (" + palabraJ2 + "): " + puntosJ2 + " puntos");
 
@@ -96,3 +96,5 @@ public class Palabra {
         }
     }
 }
+
+
