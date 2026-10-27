@@ -71,7 +71,7 @@ public class palabramaslarga {
         System.out.print("¿Jugador 1, la palabra del Jugador 2 es válida en el diccionario? (1 = Sí, 0 = No) ");
         int diccJ2 = sc.nextInt();
 
-        // Calcular puntos (longitud de la palabra si el diccionario da el visto bueno)
+        // Calcular puntos 
         int puntosJ1 = 0;
         if (diccJ1 == 1) {
             puntosJ1 = palabraJ1.length();
