@@ -1,18 +1,34 @@
-## Getting Started
 
-Welcome to the VS Code Java world. Here is a guideline to help you get started to write Java code in Visual Studio Code.
+## Descripción
+Cifras y Letras es un juego desarrollado en Java para dos jugadores, inspirado en el conocido concurso de televisión. El objetivo es competir en diferentes pruebas de cálculo mental y palabras para conseguir la mayor puntuación.
 
-## Folder Structure
+## Modos de juego
+- **Modo Concurso:** se juegan todas las pruebas y se suman puntos para determinar quién gana.
+- **Modo Rápido:** permite elegir directamente una prueba.
 
-The workspace contains two folders by default, where:
+## Pruebas disponibles
+1. **La cifra exacta:** conseguir un resultado lo más cercano posible a un número objetivo.
+2. **La palabra más larga:** formar la palabra válida más larga con las letras disponibles.
+3. **La calculadora humana:** resolver operaciones matemáticas en el menor tiempo posible.
+4. **Penalti matemático:** resolver una operación para poder lanzar un penalti e intentar marcar gol.
 
-- `src`: the folder to maintain sources
-- `lib`: the folder to maintain dependencies
+## Configuración
+El juego permite modificar:
+- Número de rondas.
+- Cantidad de letras.
+- Número de operaciones de la calculadora humana.
 
-Meanwhile, the compiled output files will be generated in the `bin` folder by default.
+## Tecnologías utilizadas
+- Java.
+- Scanner.
+- Random.
 
-> If you want to customize the folder structure, open `.vscode/settings.json` and update the related settings there.
+## Cómo ejecutar el programa
+1. Descargar o clonar este repositorio.
+2. Abrir el proyecto en un editor de Java, como Visual Studio Code.
+3. Ejecutar el archivo `CifrasYLetras.java`.
+4. Seguir las instrucciones que aparecen por pantalla.
 
-## Dependency Management
-
-The `JAVA PROJECTS` view allows you to manage your dependencies. More details can be found [here](https://github.com/microsoft/vscode-java-dependency#manage-dependencies).
+## Autores
+- Sergio Guillén Lozano
+- Adrián Florencio Torta
