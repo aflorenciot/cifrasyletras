@@ -1,7 +1,7 @@
 import java.util.Random;
 import java.util.Scanner;
 
-public class App {
+public class CifrasYLetras {
 
     /**
      * VARIABLE GLOBALES
@@ -39,6 +39,7 @@ public class App {
             
             switch (select1) {
                 case 1:
+                    modoConcurso();
                     break;
                 
                 case 2:
@@ -46,7 +47,7 @@ public class App {
                     break;
 
                 case 3:
-                    // settingsProgram(); // Puedes descomentar si tienes el menú de config activo
+                    settingsProgram();
                     break;
 
                 case 4:
@@ -60,6 +61,17 @@ public class App {
     }
 
     /**
+     * FUNCIÓN MODO CONCURSO
+     */
+    public static void modoConcurso() {
+        System.out.println("\n=== MODO CONCURSO ===");
+        jugarCifraExacta();
+        jugarPalabraMasLarga();
+        calculadoraHumana();
+        jugarPruebaOriginal();
+    }
+
+    /**
      * FUNCIÓN MODO RÁPIDO
      */
     public static void modoRapido() {
@@ -67,7 +79,7 @@ public class App {
         System.out.println("1. Cifra exacta");
         System.out.println("2. La palabra más larga");
         System.out.println("3. La calculadora humana");
-        System.out.println("4. Prueba original (El código secreto)");
+        System.out.println("4. Prueba original (Penalti Matemático)");
 
         System.out.print("Selecciona la prueba que deseas jugar (1-4): ");
         int select = sc.nextInt();
@@ -84,7 +96,7 @@ public class App {
                 calculadoraHumana();
                 break;
             case 4:
-                //jugarPruebaOriginal();
+                jugarPruebaOriginal();
                 break;
             default:
                 System.out.println("Prueba no válida.");
@@ -92,7 +104,7 @@ public class App {
     }
 
     /**
-     * FUNCIÓN LA CIFRA EXACTA (Integrada)
+     * FUNCIÓN LA CIFRA EXACTA
      */
     public static void jugarCifraExacta() {
         System.out.println("\n=== PRUEBA: LA CIFRA EXACTA ===");
@@ -125,9 +137,6 @@ public class App {
         }
     }
 
-    /**
-     * TURNO JUGADOR CIFRA EXACTA
-     */
     public static int turnoJugadorCifra(String nombre, int objetivo, int a1, int a2, int a3, int a4, int a5, int a6) {
         System.out.println("\n--- Turno de " + nombre + " ---");
         int acumulado = 0;
@@ -185,7 +194,7 @@ public class App {
     }
 
     /**
-     * FUNCIÓN LA PALABRA MÁS LARGA (Integrada)
+     * FUNCIÓN LA PALABRA MÁS LARGA
      */
     public static void jugarPalabraMasLarga() {
         System.out.println("\n=== PRUEBA: LA PALABRA MÁS LARGA ===");
@@ -232,27 +241,21 @@ public class App {
         }
     }
 
-    /**
-     * GENERADOR DE LETRAS DISPONIBLES (Adaptado a cantidadLetras)
-     */
     public static String generarLetrasDisponibles() {
         String vocales = "AEIOU";
         String consonantes = "BCDFGHJLMNÑPRSTV";
         String resultado = "";
 
-        // Generar 4 vocales obligatorias
         for (int i = 0; i < 4; i++) {
             int indice = r.nextInt(vocales.length());
             resultado = resultado + vocales.charAt(indice);
         }
 
-        // Generar 4 consonantes obligatorias
         for (int i = 0; i < 4; i++) {
             int indice = r.nextInt(consonantes.length());
             resultado = resultado + consonantes.charAt(indice);
         }
 
-        // Generar las letras restantes hasta completar la cantidad configurada (cantidadLetras)
         for (int i = 0; i < (cantidadLetras - 8); i++) {
             if (r.nextBoolean()) {
                 int indice = r.nextInt(vocales.length());
@@ -301,9 +304,6 @@ public class App {
         }
     }
 
-    /**
-     * RONDAS CALCULADORA HUMANA
-     */
     public static double rondaCalculadora() {
         int errores = 0;
         int numInicial = r.nextInt(100) + 1;
@@ -365,5 +365,174 @@ public class App {
         System.out.println("Errores cometidos: " + errores + " (Penalización: " + (errores * 20) + " segundos).");
         
         return tiempoTotalSegundos;
+    }
+
+    /**
+     * FUNCIÓN PRUEBA ORIGINAL: PENALTI MATEMÁTICO (Integrada)
+     */
+    public static void jugarPruebaOriginal() {
+        System.out.println("\n=== PRUEBA ORIGINAL: PENALTI MATEMÁTICO ===");
+        System.out.println("Dos jugadores, cinco penaltis cada uno.");
+        System.out.println();
+
+        int goles1 = 0;
+        int goles2 = 0;
+
+        for (int i = 1; i <= 5; i++) {
+            System.out.println("--- RONDA " + i + " ---");
+
+            goles1 += turnoPenalti(jugador1);
+            goles2 += turnoPenalti(jugador2);
+
+            System.out.println();
+            System.out.println("MARCADOR DE LA PRUEBA");
+            System.out.println(jugador1 + ": " + goles1 + " goles");
+            System.out.println(jugador2 + ": " + goles2 + " goles");
+            System.out.println();
+        }
+
+        System.out.println("=== RESULTADO FINAL PRUEBA ORIGINAL ===");
+        System.out.println(jugador1 + ": " + goles1 + " goles");
+        System.out.println(jugador2 + ": " + goles2 + " goles");
+
+        if (goles1 > goles2) {
+            gameJugador1++;
+            System.out.println("¡Gana la prueba " + jugador1 + "!");
+        } else if (goles2 > goles1) {
+            gameJugador2++;
+            System.out.println("¡Gana la prueba " + jugador2 + "!");
+        } else {
+            System.out.println("¡La prueba ha finalizado en empate!");
+        }
+    }
+
+    public static int turnoPenalti(String nombreJugador) {
+        int num1 = r.nextInt(20) + 10;
+        int num2 = r.nextInt(15) + 2;
+        int operacion = r.nextInt(4) + 1;
+        int resultado = 0;
+        int respuesta;
+
+        System.out.println("Turno de " + nombreJugador);
+
+        if (operacion == 1) {
+            resultado = num1 + num2;
+            System.out.println("Calcula: " + num1 + " + " + num2);
+        } else if (operacion == 2) {
+            resultado = num1 - num2;
+            System.out.println("Calcula: " + num1 + " - " + num2);
+        } else if (operacion == 3) {
+            num1 = r.nextInt(12) + 2;
+            num2 = r.nextInt(9) + 2;
+            resultado = num1 * num2;
+            System.out.println("Calcula: " + num1 + " x " + num2);
+        } else {
+            num2 = r.nextInt(9) + 2;
+            resultado = num2 * (r.nextInt(10) + 2);
+            num1 = resultado;
+            System.out.println("Calcula: " + num1 + " / " + num2);
+            resultado = num1 / num2;
+        }
+
+        System.out.print("Resultado: ");
+        respuesta = sc.nextInt();
+        sc.nextLine();
+
+        if (respuesta == resultado) {
+            System.out.println("¡Correcto! Puedes chutar.");
+            System.out.println("1. Izquierda");
+            System.out.println("2. Centro");
+            System.out.println("3. Derecha");
+            System.out.print("Elige dirección: ");
+
+            int direccion = sc.nextInt();
+            sc.nextLine();
+
+            while (direccion < 1 || direccion > 3) {
+                System.out.print("Elige 1, 2 o 3: ");
+                direccion = sc.nextInt();
+                sc.nextLine();
+            }
+
+            int portero = r.nextInt(3) + 1;
+            System.out.println("El portero elige: " + portero);
+
+            if (direccion != portero) {
+                System.out.println("¡GOOOOL!");
+                return 1;
+            } else {
+                System.out.println("¡PARADA DEL PORTERO!");
+                return 0;
+            }
+
+        } else {
+            System.out.println("¡Incorrecto! Pierdes el penalti.");
+            System.out.println("La respuesta era: " + resultado);
+            return 0;
+        }
+    }
+
+    /**
+     * MENÚ DE CONFIGURACIÓN DEL PROGRAMA
+     */
+    public static void settingsProgram() {
+        do {
+            System.out.println("\n-----------------------");
+            System.out.println(" MENÚ DE CONFIGURACIÓN ");
+            System.out.println("-----------------------");
+            System.out.println("1. Modificar repeticiones de las pruebas (Actual: " + repeticionesPruebas + ")");
+            System.out.println("2. Modificar cantidad de letras (Actual: " + cantidadLetras + ")");
+            System.out.println("3. Modificar cantidad de operaciones en Calculadora Humana (Actual: " + numOpera + ")");
+            System.out.println("4. Volver al Menú Principal");
+
+            System.out.print("Selecciona una opción: ");
+            select2 = sc.nextInt();
+            sc.nextLine();
+
+            switch (select2) {
+                case 1:
+                    System.out.print("Introduce el nuevo número de repeticiones (mínimo 1): ");
+                    int numRep = sc.nextInt();
+                    sc.nextLine();
+                    if (numRep >= 1) {
+                        repeticionesPruebas = numRep;
+                        System.out.println("¡Configuración actualizada con éxito!");
+                    } else {
+                        System.out.println("Error: El número de repeticiones debe ser al menos 1.");
+                    }
+                    break;
+
+                case 2:
+                    System.out.print("Introduce la cantidad de letras (mínimo 8, 4 vocales y 4 consonantes): ");
+                    int numWord = sc.nextInt();
+                    sc.nextLine();
+                    if (numWord >= 8) {
+                        cantidadLetras = numWord;
+                        System.out.println("¡Configuración actualizada con éxito!");
+                    } else {
+                        System.out.println("Error: La cantidad de letras debe ser al menos de 8 caracteres.");
+                    }
+                    break;
+
+                case 3:
+                    System.out.print("Introduce la cantidad de operaciones para la calculadora humana (mínimo 1): ");
+                    int numOp = sc.nextInt();
+                    sc.nextLine();
+                    if (numOp >= 1) {
+                        numOpera = numOp;
+                        System.out.println("¡Configuración actualizada con éxito!");
+                    } else {
+                        System.out.println("Error: Debe haber al menos 1 operación.");
+                    }
+                    break;
+
+                case 4:
+                    System.out.println("Volviendo al Menú Principal...");
+                    break;
+
+                default:
+                    System.out.println("Opción no válida. Inténtalo de nuevo.");
+            }
+        } while(select2 != 4);
     }
 }
